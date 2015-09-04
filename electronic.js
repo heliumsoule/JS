@@ -124,6 +124,7 @@ var test = {
 	}
 };
 console.log(test.addPropTo([15]));
+console.log(test.addPropTo([10]));
 
 
 
