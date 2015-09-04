@@ -1,15 +1,15 @@
 var plan = ["############################",
-            "#      #    #      o      ##",
-            "#                          #",
-            "#          #####           #",
-            "##         #   #    ##     #",
-            "###           ##     #     #",
-            "#           ###      #     #",
-            "#   ####                   #",
-            "#   ##       o             #",
-            "# o  #         o       ### #",
-            "#    #                     #",
-            "############################"];
+			"#      #    #      o      ##",
+			"#                          #",
+			"#          #####           #",
+			"##         #   #    ##     #",
+			"###           ##     #     #",
+			"#           ###      #     #",
+			"#   ####                   #",
+			"#   ##       o             #",
+			"# o  #         o       ### #",
+			"#    #                     #",
+			"############################"];
 
 function Vector(x,y) {
 	this.x = x;
@@ -98,6 +98,7 @@ function charFromElement(element) {
 }
 
 World.prototype.toString = function() {
+	console.log("CALLED");
 	var output = ' ';
 	for (var y = 0; y < this.grid.height; y++) {
 		for (var x = 0; x < this.grid.width; x++) {
@@ -110,9 +111,6 @@ World.prototype.toString = function() {
 };
 
 function Wall() {}
-
-var world = new World(plan, {'#': Wall, 'o': BouncingCritter});
-console.log(world.toString());
 
 //Alternatively, a third approach is to bind the this keyword to a function.
 var test = {
@@ -146,7 +144,7 @@ Grid.prototype.forEach = function(f, context) {
 World.prototype.turn = function() {
 	var acted = [];
 	this.grid.forEach(function(critter, vector) {
-		if (critter.act && acted.indexOf(critter) != -1) {
+		if (critter.act && acted.indexOf(critter) == -1) {
 			acted.push(critter);
 			this.letAct(critter, vector);
 		}
@@ -189,6 +187,12 @@ View.prototype.find = function(ch) {
 	var found = this.findAll(ch);
 	if (found.length == 0) return null;
 	return randomElement(found);
+};
+var world = new World(plan, {'#': Wall, 'o': BouncingCritter});
+
+for (var i = 0; i < 5; i++) {
+	world.turn();
+	console.log(world.toString());
 }
 
 
