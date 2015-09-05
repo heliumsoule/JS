@@ -159,9 +159,30 @@ function lastElement(array) {
 	return array[array.length - 1];
 }
 
+function MultiplicatorUnitFailure() {}
 
+function primitiveMultiply(a, b) {
+	if (Math.random() < .5) return a * b;
+	else throw new MultiplicatorUnitFailure();
+}
 
+function reliableMultiply(a,b) {
+	var output;
+	while(true) {
+		try {
+			output = primitiveMultiply(a, b);
+			break;
+		} catch (e) {
+			if (e instanceof MultiplicatorUnitFailure)
+				console.log('The odds are not in our favor');
+			else 
+				throw e;
+		}
+	}
+	return output;
+}
 
+console.log(reliableMultiply(10,5));
 
 
 
