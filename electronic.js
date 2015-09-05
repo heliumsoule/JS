@@ -315,10 +315,32 @@ var valley = new LifelikeWorld(
 	"O": PlantEater,
 	"*": Plant}
 );
-
-
-
-
+function SmartPlantEater() {
+	this.energy = 20;
+}
+SmartPlantEater.prototype.act = function(context) {
+	var space = context.find(' ');
+	if (this.energy > 80 && space)
+		return {type: 'reproduce', direction: space};
+	var plant = context.find('*');
+	if (plant && this.energy < 10) 
+		return {type: 'eat', direction: plant};
+	if (space) 
+		return {type: 'move', direction: space};
+};
+function Predator() {
+	this.energy = 60;
+}
+Predator.prototype.act = function(context) {
+	var space = context.find(' ') || context.find('*');
+	if (this.energy > 150 && space) 
+		return {type: 'reproduce', direction: space};
+	var herbivores = context.find('O');
+	if (herbivoes) 
+		return {type: 'eat', direction: plant};
+	if (space) 
+		return {type: 'move', direction: space};
+};
 
 
 
