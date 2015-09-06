@@ -113,11 +113,52 @@ console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
 function stripComments(code) {
 	return code.replace(/\/\/.*|\/\*[^]*\*\//g, '');
 }
+console.log(stripComments('1 + /* 2 */3'));
+console.log(stripComments('x = 10; // ten!'));
+console.log(stripComments('1 /* a */+/* b */ 1'));
+//+, *, ? and {} are greedy operators.
+function stripCommentsTwo(code) {
+	return code.replace(/\/\/.*|\/\*[^]*?\*\//g, '');
+}
+console.log(stripCommentsTwo('1 /* a */+/* b */ 1'));
 
+var name = 'harry';
+var text = 'Harry is a suspicious charater.';
+var regexp = new RegExp('\\b(' + name + ')\\b', 'gi');
+//gi - global and case insensitive
+console.log(text.replace(regexp, '_$1_'));
 
+var name = 'dea+hl[]rd';
+var text = 'This dea+hl[]rd guy is super annoying.';
+var escaped = name.replace(/[^\w\s]/g, '\\');
+console.log(escaped);
+var escaped = name.replace(/[^\w\s]/g, '\\$');
+console.log(escaped);
+var escaped = name.replace(/[^\w\s]/g, '\\$&');
+console.log(escaped);
+var regexp = new RegExp('\\b(' + escaped + ')\\b', 'gi');
+console.log(text.replace(regexp, '_$1_'));
 
+//SEARCH
+console.log('   word'.search(/\S/));
+console.log('       '.search(/\S/));
+var pattern = /y/g;
+pattern.lastIndex = 3;
+var match = pattern.exec('xyzzy');
+console.log(match.index);
+console.log(pattern.lastIndex);
 
+//PROBLEMS WITH GLOBAL INDEXING
+var digit = /\d/g;
+console.log(digit.exec('here it is: 1'));
+console.log(digit.exec('and now: 1'));
+console.log('Banana'.match(/an/g));
 
+var input = 'A string with 3 numbers in it... 42 and 88.';
+var number = /\b(\d+)\b/g;
+var match;
+while (match = number.exec(input))
+	console.log('Found', match[1], 'at', match.index);
 
 
 
