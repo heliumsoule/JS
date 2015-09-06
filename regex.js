@@ -63,6 +63,61 @@ console.log(new Date());
 console.log(new Date(2009, 11, 9));
 console.log(new Date(2009, 11, 9, 12, 59, 59, 999));
 
+console.log(new Date(2013, 11, 19).getTime());
+console.log(new Date(1387429200000));
+
+function findDate(string) {
+	var dateTime = /(\d{1,2})-(\d{1,2})-(\d{4})/;
+	var match = dateTime.exec(string);
+	return new Date(Number(match[3]),
+					Number(match[2]) - 1, //Why is there a -1
+					Number(match[1]));
+}
+
+console.log(findDate('30-1-2003'));
+console.log(findDate('100-1-30000'));
+//To prevent the above from happening, use the caret to match the start of the input and 
+//$ to match the end of the input.
+
+console.log(/cat/.test('concatenate'));
+console.log(/\bcat\b/.test('concatenate'));
+
+var animalCount = /\b\d+ (pig|cow|chicken)s?\b/;
+console.log(animalCount.test('15 pigs'));
+console.log(animalCount.test('15 pigchickens'));
+
+console.log('papa'.replace('p','m'));
+console.log('Borobudur'.replace(/[ou]/,'a'));
+console.log('Borobudur'.replace(/[ou]/g,'a'));
+
+console.log(
+	'Hopper, Grace\nMcCarthy, John\nRitchie, Dennis'
+	.replace(/([\w ]+), ([\w ]+)/g, '$2 $1'));
+
+var s = 'the cia and the fbi';
+console.log(s.replace(/\b(fbi|cia)\b/g, function(str) {
+	return str.toUpperCase();
+}));
+
+var stock = '1 lemon, 2 cabbages, and 101 eggs';
+function minusOne(match, amount, unit) {
+	amount = Number(amount) - 1;
+	if (amount == 1) 
+		unit = unit.slice(0, unit.length - 1);
+	else if (amount == 0)
+		amount = 'no';
+	return amount + ' ' + unit;
+}
+console.log(stock.replace(/(\d+) (\w+)/g, minusOne))
+
+
+
+
+
+
+
+
+
 
 
 
