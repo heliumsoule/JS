@@ -250,6 +250,7 @@ console.log(validateNumbers.exec('4E10'));
 console.log(validateNumbers.exec('1243.324'));
 console.log(validateNumbers.exec('7E-4'));
 console.log(validateNumbers.exec('abc123.4'));
+console.log(validateNumbers.exec('.'));
 
 
 
