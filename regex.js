@@ -47,7 +47,22 @@ console.log(cartoonCrying.test('BOOOOOOHOOHOO'));
 var match = /\d+/.exec('one two 100');
 console.log(match);
 
-20
+//String match function
+console.log('one two 100'.match(/\d+/));
+var quotedText = /'([^']*)'/;
+console.log(quotedText.exec("She said 'hello'"));
+
+//When a group isn't matched, the output is undefined.
+console.log(/bad(ly)?/.exec('bad'));
+console.log(/(\d)+/.exec('123'));
+
+//DATES AND TIMES
+console.log(new Date());
+
+//What is weird about this picture?
+console.log(new Date(2009, 11, 9));
+console.log(new Date(2009, 11, 9, 12, 59, 59, 999));
+
 
 
 
