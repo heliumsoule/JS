@@ -191,6 +191,52 @@ function parseINI(string) {
 console.log(parseINI(INPUT));
 
 
+// /abc/ sequence of characters
+// /[abc]/ any character from the set of characters
+// /[^abc]/ any character NOT in the set of characters
+// /[0-9]/ any character in a range of characters
+// /x+/ one or more occurrence of pattern x. GREEDY
+// /x+?/ one or more occurrences, NONGREEDY.
+// /x*/ zero or more occurrences
+// /x?/ zero or one occurrence.
+// /x{2,4}/ between two and four occurrences
+// /(abc)/ a group
+// /a|b|c/ any one of several patterns
+// /\d/ a digit character
+// /\w/ an alphanumeric character ('word character')
+// /\s/ any whitespace character
+// /./ any character except newlines
+// /\b/ a word boundary
+// /^/ start of input
+// /$/ end of input
+
+//EXERCISES
+//Try using debuggex.com
+var one = /ca(r|t)/gi;
+console.log(one.exec('cartooncat'));
+console.log(one.exec('cartooncat'));
+
+var two = /pr?op/gi;
+console.log(two.exec('suproping'));
+
+var three = /ferr(et|y|ari)/gi;
+console.log(three.exec('Her name is Ferrari'));
+
+var four = /ious$/;
+console.log(four.exec('pretentious'));
+console.log(four.exec('pretentiously'));
+
+var five = /\s(.|,|:|;)/;
+console.log(five.exec(' .'));
+console.log(five.exec('What ;'));
+
+var six = /[^]{6,}/;
+console.log(six.exec('Testing'));
+console.log(six.exec('James'));
+
+var seven = /e/;
+console.log(seven.exec('Naked'));
+console.log(seven.exec('Nakd'));
 
 
 
