@@ -108,7 +108,7 @@ function minusOne(match, amount, unit) {
 		amount = 'no';
 	return amount + ' ' + unit;
 }
-console.log(stock.replace(/(\d+) (\w+)/g, minusOne))
+console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
 
 
 
