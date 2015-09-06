@@ -238,6 +238,25 @@ var seven = /e/;
 console.log(seven.exec('Naked'));
 console.log(seven.exec('Nakd'));
 
+var quotingStyle = /(\b'|'\b)/g;
+console.log(quotingStyle.exec("She said: 'How aren't you doing today'"));
+console.log(quotingStyle.exec("She said: 'How aren't you doing today'"));
+
+var validateNumbers = /^(.\d+|\d+(.\d+|[eE]-?\d+))$/
+console.log(validateNumbers.exec('12345'));
+console.log(validateNumbers.exec('.242'));
+console.log(validateNumbers.exec('4e5'));
+console.log(validateNumbers.exec('4E10'));
+console.log(validateNumbers.exec('1243.324'));
+console.log(validateNumbers.exec('7E-4'));
+console.log(validateNumbers.exec('abc123.4'));
+
+
+
+
+
+
+
 
 
 
