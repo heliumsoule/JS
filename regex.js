@@ -24,3 +24,37 @@ console.log(dateTime.test("Sept-05-2015 21:33"));
 var notBinary = /[^01]/;
 console.log(notBinary.test('10101201010024002020000'));
 console.log(notBinary.test('10101010101000001011'));
+
+// + allows for >= 1 matching of the RegExp pattern. * allows for >= 0.
+console.log(/\d+/.test('123'));
+console.log(/\d+/.test(''));
+console.log(/\d*/.test(''));
+console.log(/\d*/.test('123'));
+
+var neighbor = /neighbou?r/;
+console.log(neighbor.test('neighbor'));
+console.log(neighbor.test('neighbour'));
+
+//Range specification {LOWER, UPPOER}. You can leave out either the lower or the upper.
+var dateTime = /\d{1,2}-\d{1,2}-\d{4} \d{1,2}:\d{1,2}/;
+console.log(dateTime.test('09-05-2015 21:33'));
+
+//i creates insensitivity
+//Parentheses are useful when you want to apply an operation to an entire group.
+var cartoonCrying = /boo+(hoo+)+/i;
+console.log(cartoonCrying.test('BOOOOOOHOOHOO'));
+
+var match = /\d+/.exec('one two 100');
+console.log(match);
+
+20
+
+
+
+
+
+
+
+
+
+
