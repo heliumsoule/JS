@@ -110,7 +110,9 @@ function minusOne(match, amount, unit) {
 }
 console.log(stock.replace(/(\d+) (\w+)/g, minusOne));
 
-
+function stripComments(code) {
+	return code.replace(/\/\/.*|\/\*[^]*\*\//g, '');
+}
 
 
 
