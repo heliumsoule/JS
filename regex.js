@@ -157,12 +157,38 @@ console.log('Banana'.match(/an/g));
 var input = 'A string with 3 numbers in it... 42 and 88.';
 var number = /\b(\d+)\b/g;
 var match;
-while (match = number.exec(input))
+while (match = number.exec(input)) {
 	console.log('Found', match[1], 'at', match.index);
+}
 
+var INPUT = 'searchengine=http://www.google.com/search?q=$1\nspitefulness=9.7\n;comments are preceded by a semicolon...\n;each section concerns an individual enemy\n[larry]\nfullname=Larry Doe\ntype=kindergarten bully\nwebsite=http://www.geocities.com/CapeCanaveral/11451\n[gargamel]\nfullname=Gargamel\ntype=evil sorcerer\noutputdir=/home/marijn/enemies/gargamel'
 
+function parseINI(string) {
+	var currentSection = {name: 'INI', fields: []};
+	var categories = [currentSection];
 
+	string.split(/\r?\n/).forEach(function(line) {
+		var match;
+		if (/^\s*(;.*)$/.test(line)) {
+			//At the start of a line, if there are any whitespace \s characters or semicolons, the line is ignored.
+			return;
+		} else if (match = line.match(/^\[(.*)\]$/)) {
+			//If there is a [], then the line is a section header. Then put what's in the parentheses into the match.
+			currentSection = {name: match[1], fields: []};
+			categories.push(currentSection);
+		} else if (match = line.match(/^(\w+)=(.*)$/)) {
+			//Setting an alphanumeric identifier to a value specified by the second parentheses
+			currentSection.fields.push({name: match[1], value: match[2]});
+		} else {
+			throw new Error("Line '" + line + "' is invalid.");
+			//Anything else is simply an error that the program doesn't understand.
+		}
+	});
 
+	return categories;
+}
+
+console.log(parseINI(INPUT));
 
 
 
