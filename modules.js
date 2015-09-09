@@ -199,11 +199,42 @@ var monthYear = {};
 console.log(monthYear.name(2));
 console.log(monthYear.number('November'));
 
+//MODULE 1
+/* 
+Vector
+Grid
+View
+directions
+directionNames
+*/
 
+//MODULE 2 
+/*
+BouncingCritter
+WallFollower
+Plant
+PlantEater
+SmartPlantEater
+Tiger
+*/
 
+//MODULE 3
+/*
+randomElement
+elementFromChar
+charFromElement
+dirPlus
+*/
 
+//MODULE 4
+/*
+World
+Wall
+LifelikeWorld
+*/
 
-
+//Move the modules.export into the cache before running the module so that the 
+//default exports value doesn't change until after the modules have loaded.
 
 
 
