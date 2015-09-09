@@ -234,7 +234,7 @@ LifelikeWorld
 */
 
 //Move the modules.export into the cache before running the module so that the 
-//default exports value doesn't change until after the modules have loaded.
+//default exports value doesn't change until after the modules have loaded.g
 
 
 
