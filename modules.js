@@ -78,7 +78,7 @@ function backgroundReadFile(name, c) {
 	}, 200 * Math.random());
 }
 backgroundReadFile.files = {
-"weekDay": 'define([], function() {\
+	"weekDay": 'define([], function() {\
 	var names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];\
 	return { name: function(number) { return names[number]; }, number: function(name) { return names.indexOf(name); }};\
 	});',
@@ -114,7 +114,95 @@ require.cache = Object.create(null);
 var weekDay = require('weekDay');
 var today = require('today');
 
-console.log(weekDay.name(today.dayNumber()));
+// console.log(weekDay.name(today.dayNumber()));
+
+//ASYNCHRONOUS
+//MODULE
+//DEFINITION'
+var defineCache = Object.create (null);
+var currentMod = null;
+
+function getModule(name) {
+	if (name in defineCache)
+		return defineChache[name];
+
+	var module = {exports: null,
+					loaded: false,
+					onLoad: []};
+	defineCache[name] = module;
+	backgroundReadFile(name, function(code) {
+		currentMod = module;
+		new Function('', code)();
+	});
+
+	return module;
+}
+
+function define(depNames, moduleFunction) {
+	var myMod = currentMod;
+	var deps = depNames.map(getModule);
+
+	deps.forEach(function(mod) {
+		if(!mod.loaded) 
+			mod.onLoad.push(whenDepsLoaded);
+	});
+
+	function whenDepsLoaded() {
+		if (!deps.every(function(m) { return m.loaded; }))
+		return;
+
+		var args = deps.map(function(m) { return m.exports; });
+		var exports = moduleFunction.apply(null, args);
+		if (myMod) {
+			myMod.exports = exports;
+			myMod.loaded = true;
+			myMod.onLoad.forEach(function(f) { f(); });
+		}
+	}
+
+	whenDepsLoaded();
+}
+
+define([], function() {
+	var names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	return {
+		name: function(number) { return names[number]; },
+		number: function(name) { return names.indexOf(name); }
+	};
+});	
+
+define([], function() {
+	return {
+		dayNumber: function() { return (new Date).getDay(); }
+	};
+});
+
+// define(['weekDay', 'today'], function(weekDay, today) {
+// 	console.log(weekDay.name(today.dayNumber()));
+// });
+
+//EXERCISES
+var monthYear = {};
+(function(exports) {
+	var names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+					'October', 'November', 'December'];
+
+	exports.name = function(number) {
+		return names[number];
+	};
+
+	exports.number = function(name) {
+		return names.indexOf(name);
+	};
+})(monthYear);
+
+console.log(monthYear.name(2));
+console.log(monthYear.number('November'));
+
+
+
+
+
 
 
 
