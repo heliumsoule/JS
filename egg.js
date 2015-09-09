@@ -1,16 +1,16 @@
-do(define(x, 10),
-	if(>(x,5),
-		print('Whoa'),
-		print('Whatever')))
+// do(define(x, 10),
+// 	if(>(x,5),
+// 		print('Whoa'),
+// 		print('Whatever')))
 
-{
-	type: 'apply',
-	operator: {type: 'word', name: '>'},
-	args : [
-		{type: 'word', name: 'x'},
-		{type: 'value', name: 5}
-	]
-}
+// {
+// 	type: 'apply',
+// 	operator: {type: 'word', name: '>'},
+// 	args : [
+// 		{type: 'word', name: 'x'},
+// 		{type: 'value', name: 5}
+// 	]
+// }
 
 function parseExpression(program) {
 	program = skipSpace(program);
@@ -23,7 +23,6 @@ function parseExpression(program) {
 		expr = {type: 'word', name: match[0]};
 	else
 		throw new SyntaxError('Unexpected syntax: ' + program);
-
 	return parseApply(expr, program.slice(match[0].length));
 }
 
@@ -51,6 +50,89 @@ function parseApply(expr, program) {
 	}
 	return parseApply(expr, program.slice(1));
 }
+
+function parse(program) {
+	var result = parseExpression(program);
+	if (skipSpace(result.rest).length > 0) 
+		throw new SyntaxError('Unexpected text after program');
+	return result.expr;
+}
+
+console.log(parse('+(a, 10)'));
+
+function evaluate(expr, env) {
+	switch(expr.type) {
+		case 'value':
+			return expr.value;
+		case 'word':
+			if (expr.name in env) 
+				return env[expr.name];
+			else
+				throw new ReferenceError('Undefined variable: ' + expr.name);
+		case 'apply': 
+			if (expr.operator.type == 'word' &&
+				expr.operator.name in specialForms)
+				return specialForms[expr.operator.name](expr.args, env);
+
+			var op = evaluate(expr.operator, env);
+			if (typeof op != 'function')
+				throw new TypeError('Applying a non-function');
+			return op.apply(null, expr.args.map(function(args) {
+				return evaluate(arg, env);
+			}));
+	}
+}
+
+var specialForms = Object.create(null);
+
+specialForms['if'] = function(args, env) {
+	if (args.length != 3) 
+		throw new SyntaxError('Wrong number of args to if');
+
+	if (evaluate(args[0], env) !== false)
+		return evaluate(args[1], env);
+	else
+		return evaluate(args[2], env);
+
+};
+
+specialForms['while'] = function(args, env) {
+	if (args.length != 2) 
+		throw new SyntaxError('Wrong number of args to while');
+
+	while (evaluate(args[0], env) !== false)
+		evaluate(args[1], env);
+	return false;
+};
+
+specialForms['do'] = function(args, env) {
+	var value = false;
+	args.forEach(function(arg) {
+		value = evaluate(arg, env);
+	});
+	return value;
+};
+
+specialForms['define'] = function(args, env) {
+	if (args.length != 2 || args[0].type != 'word')
+		throw new SyntaxError('Wrong use of define');
+	var value = evaluate(args[1], env);
+	env[args[0].name] = value;
+	return value;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
