@@ -23,6 +23,8 @@ function parseExpression(program) {
 		expr = {type: 'word', name: match[0]};
 	else
 		throw new SyntaxError('Unexpected syntax: ' + program);
+	// console.log(match);
+	// console.log(expr);
 	return parseApply(expr, program.slice(match[0].length));
 }
 
@@ -30,16 +32,18 @@ function skipSpace(string) {
 	var first = string.search(/\S/);
 	if (first == -1) return '';
 	return string.slice(first);
-}
+}	
 
 function parseApply(expr, program) {
 	program = skipSpace(program);
-	if (program[0] != '(')
+	if (program[0] != '(') {
+		// console.log("Am I ever here ", program);
 		return {expr: expr, rest: program};
-
+	}
 	program = skipSpace(program.slice(1));
 	expr = {type: 'apply', operator: expr, args: []};
 	while (program[0] != ')') {
+		// console.log('in the loop');
 		var arg = parseExpression(program);
 		expr.args.push(arg.expr);
 		program = skipSpace(arg.rest);
@@ -58,9 +62,11 @@ function parse(program) {
 	return result.expr;
 }
 
-console.log(parse('+(a, 10)'));
+// console.log(parse('+(a, 10)'));
 
 function evaluate(expr, env) {
+	console.log(expr);
+	console.log('Iteration');
 	switch(expr.type) {
 		case 'value':
 			return expr.value;
@@ -73,7 +79,7 @@ function evaluate(expr, env) {
 			if (expr.operator.type == 'word' &&
 				expr.operator.name in specialForms)
 				return specialForms[expr.operator.name](expr.args, env);
-
+			console.log('EVER HERE');
 			var op = evaluate(expr.operator, env);
 			if (typeof op != 'function')
 				throw new TypeError('Applying a non-function');
@@ -128,57 +134,57 @@ topEnv['false'] = false;
 var prog = parse('if(true, false, true)');
 console.log(evaluate(prog, topEnv));
 
-['+', '-', '*', '/', '==', '<', '>'].forEach(function(op) {
-	topEnv[op] = new Function('a', 'b', 'return a ' + op + 'b;');
-});
+// ['+', '-', '*', '/', '==', '<', '>'].forEach(function(op) {
+// 	topEnv[op] = new Function('a', 'b', 'return a ' + op + 'b;');
+// });
 
-topEnv['print'] = function(value) {
-	console.log(value);
-	return value;
-};
+// topEnv['print'] = function(value) {
+// 	console.log(value);
+// 	return value;
+// };
 
-function run() {
-	var env = Object.create(topEnv);
-	var program = Array.prototype.slice.call(arguments, 0).join('\n');
-	return evaluate(parse(program), env);
-}
+// function run() {
+// 	var env = Object.create(topEnv);
+// 	var program = Array.prototype.slice.call(arguments, 0).join('\n');
+// 	return evaluate(parse(program), env);
+// }
 
-run("do(define(total, 0),",
-	"	define(count, 1),",
-	"	while(<(count, 11),",
-	"		do(define(total, +(total, count)),",
-	"			define(count, +(count, 1)))),",
-	"	print(total))");
+// run("do(define(total, 0),",
+// 	"	define(count, 1),",
+// 	"	while(<(count, 11),",
+// 	"		do(define(total, +(total, count)),",
+// 	"			define(count, +(count, 1)))),",
+// 	"	print(total))");
 
-specialForms['fun'] = function(args, env) {
-	if (!args.length) 
-		throw new SyntaxError('Functions need a body');
-	function name(expr) {
-		if (expr.type != 'word')
-			throw new SyntaxError('Arg names must be words');
-		return expr.name;
-	}
-	var argNames = args.slice(0, args.length - 1).map(name);
-	var body = args[args.length - 1];
+// specialForms['fun'] = function(args, env) {
+// 	if (!args.length) 
+// 		throw new SyntaxError('Functions need a body');
+// 	function name(expr) {
+// 		if (expr.type != 'word')
+// 			throw new SyntaxError('Arg names must be words');
+// 		return expr.name;
+// 	}
+// 	var argNames = args.slice(0, args.length - 1).map(name);
+// 	var body = args[args.length - 1];
 
-	return function() {
-		if (arguments.length != argNames.length) 
-			throw new TypeError('Wrong number of arguments');
-		var localEnv = Object.create(env);
-		for (var i = 0; i < arguments.length; i++) 
-			localEnv[argNames[i]] = arguments[i];
-		return evaluate(body, localEnv);
-	};
-};
+// 	return function() {
+// 		if (arguments.length != argNames.length) 
+// 			throw new TypeError('Wrong number of arguments');
+// 		var localEnv = Object.create(env);
+// 		for (var i = 0; i < arguments.length; i++) 
+// 			localEnv[argNames[i]] = arguments[i];
+// 		return evaluate(body, localEnv);
+// 	};
+// };
 
-run("do(define(plusOne, fun(a, +(a, 1))),",
-	"	print(plusOne(10)))");
+// run("do(define(plusOne, fun(a, +(a, 1))),",
+// 	"	print(plusOne(10)))");
 
-run("do(define(pow, fun(base, exp,",
-	"		if(==(exp, 0),", 
-	"			1,",
-	"			*(base, pow(base, -(exp, 1)))))),",
-	"	print(pow(2, 10)))");
+// run("do(define(pow, fun(base, exp,",
+// 	"		if(==(exp, 0),", 
+// 	"			1,",
+// 	"			*(base, pow(base, -(exp, 1)))))),",
+// 	"	print(pow(2, 10)))");
 
 
 
