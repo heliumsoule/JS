@@ -65,8 +65,8 @@ function parse(program) {
 // console.log(parse('+(a, 10)'));
 
 function evaluate(expr, env) {
-	console.log(expr);
-	console.log('Iteration');
+	// console.log(expr);
+	// console.log('Iteration');
 	switch(expr.type) {
 		case 'value':
 			return expr.value;
@@ -79,7 +79,7 @@ function evaluate(expr, env) {
 			if (expr.operator.type == 'word' &&
 				expr.operator.name in specialForms)
 				return specialForms[expr.operator.name](expr.args, env);
-			console.log('EVER HERE');
+			// console.log('EVER HERE');
 			var op = evaluate(expr.operator, env);
 			if (typeof op != 'function')
 				throw new TypeError('Applying a non-function');
@@ -131,51 +131,59 @@ var topEnv = Object.create(null);
 topEnv['true'] = true;
 topEnv['false'] = false;
 
-var prog = parse('if(true, false, true)');
-console.log(evaluate(prog, topEnv));
+// var prog = parse('if(true, false, true)');
+// console.log(evaluate(prog, topEnv));
 
-// ['+', '-', '*', '/', '==', '<', '>'].forEach(function(op) {
-// 	topEnv[op] = new Function('a', 'b', 'return a ' + op + 'b;');
-// });
+['+', '-', '*', '/', '==', '<', '>'].forEach(function(op) {
+	topEnv[op] = new Function('a', 'b', 'return a ' + op + 'b;');
+});
 
-// topEnv['print'] = function(value) {
-// 	console.log(value);
-// 	return value;
-// };
+console.log(topEnv['+'](3,4));
+console.log(topEnv['*'](3,4));
 
-// function run() {
-// 	var env = Object.create(topEnv);
-// 	var program = Array.prototype.slice.call(arguments, 0).join('\n');
-// 	return evaluate(parse(program), env);
-// }
+topEnv['print'] = function(value) {
+	console.log(value);
+	return value;
+};
 
-// run("do(define(total, 0),",
-// 	"	define(count, 1),",
-// 	"	while(<(count, 11),",
-// 	"		do(define(total, +(total, count)),",
-// 	"			define(count, +(count, 1)))),",
-// 	"	print(total))");
+function run() {
+	var env = Object.create(topEnv);
+	console.log('What are the arguments', arguments);
+	var program = Array.prototype.slice.call(arguments, 0).join('\n');
+	console.log('What is the program');
+	console.log(program);
+	console.log('What is the environment');
+	console.log(env);
+	return evaluate(parse(program), env);
+}
 
-// specialForms['fun'] = function(args, env) {
-// 	if (!args.length) 
-// 		throw new SyntaxError('Functions need a body');
-// 	function name(expr) {
-// 		if (expr.type != 'word')
-// 			throw new SyntaxError('Arg names must be words');
-// 		return expr.name;
-// 	}
-// 	var argNames = args.slice(0, args.length - 1).map(name);
-// 	var body = args[args.length - 1];
+run("do(define(total, 0),",
+	"	define(count, 1),",
+	"	while(<(count, 11),",
+	"		do(define(total, +(total, count)),",
+	"			define(count, +(count, 1)))),",
+	"	print(total))");
 
-// 	return function() {
-// 		if (arguments.length != argNames.length) 
-// 			throw new TypeError('Wrong number of arguments');
-// 		var localEnv = Object.create(env);
-// 		for (var i = 0; i < arguments.length; i++) 
-// 			localEnv[argNames[i]] = arguments[i];
-// 		return evaluate(body, localEnv);
-// 	};
-// };
+specialForms['fun'] = function(args, env) {
+	if (!args.length) 
+		throw new SyntaxError('Functions need a body');
+	function name(expr) {
+		if (expr.type != 'word')
+			throw new SyntaxError('Arg names must be words');
+		return expr.name;
+	}
+	var argNames = args.slice(0, args.length - 1).map(name);
+	var body = args[args.length - 1];
+
+	return function() {
+		if (arguments.length != argNames.length) 
+			throw new TypeError('Wrong number of arguments');
+		var localEnv = Object.create(env);
+		for (var i = 0; i < arguments.length; i++) 
+			localEnv[argNames[i]] = arguments[i];
+		return evaluate(body, localEnv);
+	};
+};
 
 // run("do(define(plusOne, fun(a, +(a, 1))),",
 // 	"	print(plusOne(10)))");
