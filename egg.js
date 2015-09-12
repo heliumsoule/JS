@@ -185,14 +185,34 @@ specialForms['fun'] = function(args, env) {
 	};
 };
 
-// run("do(define(plusOne, fun(a, +(a, 1))),",
-// 	"	print(plusOne(10)))");
+run("do(define(plusOne, fun(a, +(a, 1))),",
+	"	print(plusOne(10)))");
 
-// run("do(define(pow, fun(base, exp,",
-// 	"		if(==(exp, 0),", 
-// 	"			1,",
-// 	"			*(base, pow(base, -(exp, 1)))))),",
-// 	"	print(pow(2, 10)))");
+run("do(define(pow, fun(base, exp,",
+	"		if(==(exp, 0),", 
+	"			1,",
+	"			*(base, pow(base, -(exp, 1)))))),",
+	"	print(pow(2, 10)))");
+
+//Strange behavior in JavaScript
+//The int runningAvg is converted to a string, and then converted
+//back to an int
+var data = ["1", "2", "3"];
+var runningAvg = 0;
+
+for (var i = 0; i < data.length; i++) {
+	runningAvg += data[i];
+	console.log(runningAvg / (i + 1));
+}
+
+
+
+
+
+
+
+
+
 
 
 
