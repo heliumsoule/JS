@@ -23,27 +23,22 @@ function parseExpression(program) {
 		expr = {type: 'word', name: match[0]};
 	else
 		throw new SyntaxError('Unexpected syntax: ' + program);
-	// console.log(match);
-	// console.log(expr);
 	return parseApply(expr, program.slice(match[0].length));
 }
 
 function skipSpace(string) {
-	var first = string.search(/\S/);
-	if (first == -1) return '';
-	return string.slice(first);
+	var first = string.match(/^(\s|#.*)*/);
+	return string.slice(first[0].length);
 }	
 
 function parseApply(expr, program) {
 	program = skipSpace(program);
 	if (program[0] != '(') {
-		// console.log("Am I ever here ", program);
 		return {expr: expr, rest: program};
 	}
 	program = skipSpace(program.slice(1));
 	expr = {type: 'apply', operator: expr, args: []};
 	while (program[0] != ')') {
-		// console.log('in the loop');
 		var arg = parseExpression(program);
 		expr.args.push(arg.expr);
 		program = skipSpace(arg.rest);
@@ -146,6 +141,18 @@ topEnv['print'] = function(value) {
 	return value;
 };
 
+topEnv['array'] = function() {
+	return Array.prototype.slice.call(arguments, 0);
+};
+
+topEnv['length'] = function(array) {
+	return array.length;
+};
+
+topEnv['element'] = function(array, index) {
+	return array[index];
+};
+
 function run() {
 	var env = Object.create(topEnv);
 	console.log('What are the arguments', arguments);
@@ -174,7 +181,6 @@ specialForms['fun'] = function(args, env) {
 	}
 	var argNames = args.slice(0, args.length - 1).map(name);
 	var body = args[args.length - 1];
-
 	return function() {
 		if (arguments.length != argNames.length) 
 			throw new TypeError('Wrong number of arguments');
@@ -205,9 +211,13 @@ for (var i = 0; i < data.length; i++) {
 	console.log(runningAvg / (i + 1));
 }
 
+run("do(define(f, fun(a, fun(b, +(a, b)))),",
+	"	print(f(4)(5)))");
 
-
-
+console.log(parse("a # one\n   # two\n()"));
+// → {type: "apply",
+//    operator: {type: "word", name: "a"},
+//    args: []}
 
 
 
