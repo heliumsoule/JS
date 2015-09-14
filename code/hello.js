@@ -21,3 +21,23 @@ console.log(link.href);
 var ostrict = document.getElementById('gertrude');
 console.log(ostrict.src);
 console.log(ostrict.style);
+
+var paragraphs = document.getElementsByTagName('p');
+document.body.insertBefore(paragraphs[2], paragraphs[0]);
+
+function replaceImages() {
+	var images = document.getElementsByTagName('img');
+	for (var i = 0; i < images.length; i++) {
+		var image = images[i];
+		if (image.alt) {
+			var text = document.createTextNode(image.alt);
+			image.parentNode.replaceChild(text, image);
+		}
+	}
+}
+
+
+
+
+
+
