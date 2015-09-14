@@ -14,3 +14,10 @@ function talksAbout(node, string) {
 
 console.log(talksAbout(document.body, "book"));
 
+var link = document.getElementsByTagName('a')[0];
+console.log(link);
+console.log(link.href);
+
+var ostrict = document.getElementById('gertrude');
+console.log(ostrict.src);
+console.log(ostrict.style);
