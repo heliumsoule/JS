@@ -103,9 +103,19 @@ function highlightAllCode() {
 
 highlightAllCode();
 
+function time(name, action) {
+	var start = Date.now();
+	action();
+	console.log(name, "took", Date.now() - start, "ms");
+}
 
-
-
+time("naive", function() {
+	var target = document.getElementById('two');
+	target.appendChild(document.createTextNode('XXXXX'));
+	var total = Math.ceil(2000 / (target.offsetWidth / 5));
+	for (var i = 5; i < total; i++) 
+		target.appendChild(document.createTextNode('X'));
+});
 
 
 
