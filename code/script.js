@@ -117,6 +117,23 @@ time("naive", function() {
 		target.appendChild(document.createTextNode('X'));
 });
 
+var para = document.getElementById('para');
+console.log(para.style.color);
+para.style.color = 'magenta';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

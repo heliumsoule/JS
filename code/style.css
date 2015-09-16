@@ -1,0 +1,18 @@
+strong {
+	font-style: italic;
+	color: gray;
+}
+
+.subtle {
+	color: gray;
+	font-size: 80%;
+}
+
+#header {
+	background: blue;
+	color: white;
+}
+
+p.a.b#main {
+	margin-bottom: 20px;
+}
