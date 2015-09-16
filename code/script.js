@@ -137,17 +137,51 @@ function animate(time) {
 		angle += (time - lastTime) * .001;
 	lastTime = time;
 	ostrich.style.top = (Math.sin(angle) * 20) + 'px';
-	ostrich.style.left = (Math.cos(angle) * 20) + 'px';
+	ostrich.style.left = (Math.cos(angle) * 200) + 'px';
 	requestAnimationFrame(animate);
 }
 
-requestAnimationFrame(animate);
+// requestAnimationFrame(animate);
 
+var MOUNTAINS = [
+  {name: "Kilimanjaro", height: 5895, country: "Tanzania"},
+  {name: "Everest", height: 8848, country: "Nepal"},
+  {name: "Mount Fuji", height: 3776, country: "Japan"},
+  {name: "Mont Blanc", height: 4808, country: "Italy/France"},
+  {name: "Vaalserberg", height: 323, country: "Netherlands"},
+  {name: "Denali", height: 6168, country: "United States"},
+  {name: "Popocatepetl", height: 5465, country: "Mexico"}
+];
 
+function buildTable(arr) {
+	var body = document.getElementsByTagName('body')[0];
+	var table = document.createElement('table');
+	table.setAttribute('border', '2');
+	var keys = Object.keys(MOUNTAINS[0]), tbdy = document.createElement('tbody'), nametr = document.createElement('tr');
+	for (var i = 0; i < keys.length; i++) {
+		var th = document.createElement('th');
+		th.appendChild(document.createTextNode(keys[i]));
+		nametr.appendChild(th);
+	}
+	tbdy.appendChild(nametr);
+	for (var i = 0; i < keys.length; i++) {
+		var tr = document.createElement('tr');
+		for (var key in keys) {
+			var td = document.createElement('td');
+			td.appendChild(document.createTextNode(MOUNTAINS[i][keys[key]]));
+			if (MOUNTAINS[i][keys[key]] % 1 === 0) {
+				td.style.textAlign = 'right';
+			}
+			tr.appendChild(td);
+			tr.setAttribute('rowSpan', '2');
+		}
+		tbdy.appendChild(tr);
+	}
+	table.appendChild(tbdy);
+	body.appendChild(table);
+}
 
-
-
-
+buildTable(MOUNTAINS);
 
 
 
