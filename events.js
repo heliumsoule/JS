@@ -61,6 +61,38 @@ addEventListener('keyup', function(event) {
 		document.body.style.background = '';
 });
 
+console.log('V'.charCodeAt(0));
+console.log('1'.charCodeAt(0));
+
+addEventListener('keydown', function(event) {
+	if (event.keyCode == 32 && event.ctrlKey) 
+		console.log('Continuing');
+});
+
+addEventListener('keypress', function(event) {
+	console.log(String.fromCharCode(event.charCode));
+});
+
+addEventListener('click', function(event) {
+	var dot = document.createElement('div');
+	dot.className = 'dot';
+	dot.style.left = (event.pageX - 4) + 'px';
+	dot.style.top = (event.pageY - 4) + 'px';
+	document.body.appendChild(dot);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
