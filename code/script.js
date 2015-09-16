@@ -183,6 +183,25 @@ function buildTable(arr) {
 
 buildTable(MOUNTAINS);
 
+function getElementsByTagName(node, string) {
+	c = node.childNodes;
+	var output = []
+	for (var i = 0; i < c.length; i++) {
+		if (c[i].nodeName.toLowerCase() === string) {
+			output.push(c[i]);
+		}
+	}
+	return output;
+}
+
+console.log(getElementsByTagName(document.body, 'p'));
+
+
+
+
+
+
+
 
 
 
