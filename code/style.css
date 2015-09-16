@@ -16,3 +16,11 @@ strong {
 p.a.b#main {
 	margin-bottom: 20px;
 }
+
+p > a ... {
+	/* <a> tags that are children of <p> tags */
+}
+
+p a ...{
+	/* <a> tags that are inside <p> tags
+}

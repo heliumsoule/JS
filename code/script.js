@@ -18,9 +18,9 @@ var link = document.getElementsByTagName('a')[0];
 console.log(link);
 console.log(link.href);
 
-var ostrict = document.getElementById('gertrude');
-console.log(ostrict.src);
-console.log(ostrict.style);
+// var ostrict = document.getElementById('gertrude');
+// console.log(ostrict.src);
+// console.log(ostrict.style);
 
 var paragraphs = document.getElementsByTagName('p');
 document.body.insertBefore(paragraphs[2], paragraphs[0]);
@@ -121,12 +121,27 @@ var para = document.getElementById('para');
 console.log(para.style.color);
 para.style.color = 'magenta';
 
+function count(selector) {
+	return document.querySelectorAll(selector).length;
+}
 
+console.log(count('p'));
+console.log(count('.animal'));
+console.log(count('p .animal'));
+console.log(count('p > .animal'));
 
+var ostrich = document.querySelector('img');
+var angle = 0, lastTime = null;
+function animate(time) {
+	if (lastTime != null) 
+		angle += (time - lastTime) * .001;
+	lastTime = time;
+	ostrich.style.top = (Math.sin(angle) * 20) + 'px';
+	ostrich.style.left = (Math.cos(angle) * 20) + 'px';
+	requestAnimationFrame(animate);
+}
 
-
-
-
+requestAnimationFrame(animate);
 
 
 
