@@ -1,5 +1,5 @@
 body {
-	height: 200px;
+	height: 2000px;
 	background: beige;
 }
 
@@ -14,3 +14,20 @@ body {
 	border: 1px solid black;
 	height:400px; width:400px;
 }
+
+.progress {
+	border: 1px solid blue;
+	width: 100px;
+	position: fixed;
+	top: 10px; right: 10px;
+}
+
+.progress > div {
+	height: 12px;
+	background: blue;
+	width: 0%;
+}
+
+/*p:hover {
+	color: red;
+}*/

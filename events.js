@@ -110,8 +110,6 @@ function moved(event) {
 	}
 }
 
-console.log(HELLO);
-
 var para = document.getElementsByTagName('p')[7];
 function isInside(node, target) {
 	for (; node != null; node = node.parentNode) {
@@ -126,6 +124,38 @@ para.addEventListener('mouseout', function(event) {
 	if (!isInside(event.relatedTarget, para))
 		para.style.color = '';
 });
+
+var bar = document.querySelector('.progress div');
+addEventListener('scroll', function() {
+	var max = document.body.scrollHeight - innerHeight;
+	var percent = (pageYOffset / max) * 100;
+	bar.style.width = percent + '%';
+});
+
+var help = document.querySelectorAll('#help')[0];
+var fields = document.querySelectorAll('input');
+for (var i = 0; i < fields.length; i++) {
+	fields[i].addEventListener('focus', function(event) {
+		var text = event.target.getAttribute('data-help');
+		help.textContent = text;
+	});
+	fields[i].addEventListener('blur', function(event) {
+		help.textContent = '';
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
