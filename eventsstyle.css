@@ -35,6 +35,9 @@ body {
 	width: 0%;
 }
 
+textarea {
+	height: 400px; width: 400px;
+}
 /*p:hover {
 	color: red;
 }*/

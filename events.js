@@ -64,14 +64,14 @@ addEventListener('keyup', function(event) {
 console.log('V'.charCodeAt(0));
 console.log('1'.charCodeAt(0));
 
-addEventListener('keydown', function(event) {
-	if (event.keyCode == 32 && event.ctrlKey) 
-		console.log('Continuing');
-});
+// addEventListener('keydown', function(event) {
+// 	if (event.keyCode == 32 && event.ctrlKey) 
+// 		console.log('Continuing');
+// });
 
-addEventListener('keypress', function(event) {
-	console.log(String.fromCharCode(event.charCode));
-});
+// addEventListener('keypress', function(event) {
+// 	console.log(String.fromCharCode(event.charCode));
+// });
 
 var funBox = document.getElementsByClassName('funBox')[0];
 funBox.addEventListener('click', function(event) {
@@ -190,7 +190,6 @@ function displayCoords(event) {
 }
 
 var div = document.querySelector('.mousePos');
-console.log(div);
 var scheduled = false, lastEvent;
 addEventListener('mousemove', function(event) {
 	lastEvent = event;
@@ -202,6 +201,24 @@ addEventListener('mousemove', function(event) {
 		}, 250);
 	}
 });
+
+var turkishGov = document.querySelector('#Turkish');
+turkishGov.addEventListener('keydown', function(event) {
+	if (event.keyCode == 81 || event.keyCode == 87 || event.keyCode == 88) 
+		event.preventDefault();
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
