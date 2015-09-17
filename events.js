@@ -144,14 +144,36 @@ for (var i = 0; i < fields.length; i++) {
 	});
 }
 
+// var squareWorker = new Worker('squareWorker.js');
+// squareWorker.addEventListener('message', function(event) {
+// 	console.log('The worker responded:', event.data);
+// });
 
+// squareWorker.postMessage(10);
+// squareWorker.postMessage(24);
 
+// document.body.style.background = 'blue';
+// setTimeout(function() {
+// 	document.body.style.background = 'yellow';
+// }, 2000);
 
+var bombTimer = setTimeout(function() {
+	console.log('BOOM');
+}, 500);
 
+if (Math.random() < 0.5) {
+	console.log('Defused');
+	clearTimeout(bombTimer);
+}
 
-
-
-
+var ticks = 0;
+var clock = setInterval(function() {
+	console.log('tick', ticks++);
+	if (ticks == 10) {
+		clearInterval(clock);
+		console.log('Stop');
+	}
+}, 2000);
 
 
 
