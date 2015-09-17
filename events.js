@@ -166,20 +166,42 @@ if (Math.random() < 0.5) {
 	clearTimeout(bombTimer);
 }
 
-var ticks = 0;
-var clock = setInterval(function() {
-	console.log('tick', ticks++);
-	if (ticks == 10) {
-		clearInterval(clock);
-		console.log('Stop');
+// var ticks = 0;
+// var clock = setInterval(function() {
+// 	console.log('tick', ticks++);
+// 	if (ticks == 10) {
+// 		clearInterval(clock);
+// 		console.log('Stop');
+// 	}
+// }, 2000);
+
+var textarea = document.querySelectorAll('textarea')[0];
+var timeout;
+textarea.addEventListener('keydown', function() {
+	clearTimeout(timeout);
+	timeout = setTimeout(function() {
+		console.log('You stopped typing');
+	}, 500);
+});
+
+function displayCoords(event) {
+	var div = document.querySelector('.mousePos');
+	div.textContent = 'Mouse at ' + event.pageX + ', ' + event.pageY;
+}
+
+var div = document.querySelector('.mousePos');
+console.log(div);
+var scheduled = false, lastEvent;
+addEventListener('mousemove', function(event) {
+	lastEvent = event;
+	if (!scheduled) {
+		scheduled = true;
+		setTimeout(function() {
+			scheduled = false;
+			displayCoords(event);
+		}, 250);
 	}
-}, 2000);
-
-
-
-
-
-
+});
 
 
 
