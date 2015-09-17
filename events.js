@@ -110,10 +110,22 @@ function moved(event) {
 	}
 }
 
+console.log(HELLO);
 
-
-
-
+var para = document.getElementsByTagName('p')[7];
+function isInside(node, target) {
+	for (; node != null; node = node.parentNode) {
+		if (node == target) return true;
+	}
+}
+para.addEventListener('mouseover', function(event) {
+	if (!isInside(event.relatedTarget, para))
+		para.style.color = 'red';
+});
+para.addEventListener('mouseout', function(event) {
+	if (!isInside(event.relatedTarget, para))
+		para.style.color = '';
+});
 
 
 
