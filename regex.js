@@ -42,10 +42,10 @@ console.log(dateTime.test('09-05-2015 21:33'));
 //i creates insensitivity
 //Parentheses are useful when you want to apply an operation to an entire group.
 var cartoonCrying = /boo+(hoo+)+/i;
-console.log(cartoonCrying.test('BOOOOOOHOOHOO'));
+console.log("This is a test " + cartoonCrying.test('BOOOOOOHOOHOO'));
 
 var match = /\d+/.exec('one two 100');
-console.log(match);
+console.log("This is a match" + match);
 
 //String match function
 console.log('one two 100'.match(/\d+/));

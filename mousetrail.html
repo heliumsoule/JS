@@ -1,0 +1,38 @@
+<!doctype html>
+<head>
+  <title>Mouse Trail</title>
+</head>
+<body>
+  <img class="trail" src="code/ostrict.jpg">
+</body>
+<style>
+  .trail {
+    position: absolute;
+    height: 6px; width: 6px;
+    border-radius: 5px;
+    height: 20px;
+    width: 20px;
+    background: teal;
+    top: 20px;
+    left: 50px;
+  } 
+</style>
+<script>
+  var dots = [];
+  for (var i = 0; i < 12; i++) {
+    var node = document.createElement("div");
+    node.className = "trail";
+    document.body.appendChild(node);
+    dots.push(node);
+  }
+  var currentDot = 0;
+  setInterval(
+  addEventListener("mousemove", function(event) {
+    var dot = dots[currentDot];
+    dot.style.left = (event.pageX - 3) + "px";
+    dot.style.top = (event.pageY - 3) + "px";
+    currentDot = (currentDot + 1) % dots.length;
+  }), 10000);
+
+</script>
+</html>
