@@ -91,10 +91,22 @@ function Coin(pos) {
 Coin.prototype.type = "coin";
 
 var simpleLevel = new Level(simpleLevelPlan);
-console.log(simpleLevel.width, "by", simpleLeve.height);
+console.log(simpleLevel.width, "by", simpleLevel.height);
 
+function elt(name, className) {
+	var elt = document.createElement(name);
+	if (className) elt.className = className;
+	return elt
+}
 
+function DOMDisplay(parent, level) {
+	this.wrap = parent.appendChild(elt("div", "game"));
+	this.level = level;
 
+	this.wrap.appendChild(this.drawBackground());
+	this.actorLayer = null;
+	this.drawFarme();
+}
 
 
 
